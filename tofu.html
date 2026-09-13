@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tofu | Your Everyday Companion</title>
+<meta name="description" content="Meet Tofu, your little AI companion for everyday life.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --cream: #f8f6f1;
+  --ink: #17201f;
+  --muted: #687370;
+  --green: #a8c9b8;
+  --green-dark: #53796a;
+  --peach: #f1c5a7;
+  --line: #e2e4df;
+  --card: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+button, input { font: inherit; }
+
+button { cursor: pointer; }
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1, h2, h3, .logo {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.container {
+  width: min(1160px, calc(100% - 40px));
+  margin: auto;
+}
+
+.muted { color: var(--muted); }
+
+.eyebrow {
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 14px 22px;
+  font-weight: 700;
+  transition: .25s ease;
+}
+
+.btn-dark {
+  background: var(--ink);
+  color: white;
+}
+
+.btn-dark:hover {
+  background: #354542;
+  transform: translateY(-2px);
+}
+
+.btn-light {
+  background: white;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btn-light:hover { transform: translateY(-2px); }
+
+.btn-green {
+  background: var(--green);
+  color: var(--ink);
+}
+
+.btn-green:hover {
+  background: #bcd8c8;
+  transform: translateY(-2px);
+}
+
+.btn:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 3px solid var(--green-dark);
+  outline-offset: 4px;
+}
+
+nav {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -.06em;
+}
+
+.logo span { color: var(--green-dark); }
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #53615d;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.menu-btn { display: none; }
+
+.hero {
+  min-height: 650px;
+  padding: 55px 0 75px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 45px;
+}
+
+.hero h1 {
+  font-size: clamp(46px, 6vw, 78px);
+  line-height: .98;
+  letter-spacing: -.065em;
+  margin: 18px 0 25px;
+  max-width: 570px;
+}
+
+.hero h1 em {
+  color: var(--green-dark);
+  font-style: normal;
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.8;
+  max-width: 465px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 30px 0;
+}
+
+.hero-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #75b18d;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #dcecdf;
+}
+
+.hero-visual {
+  min-width: 0;
+  position: relative;
+}
+
+.robot-stage {
+  height: 530px;
+  position: relative;
+  border-radius: 36px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, #e5eee8, #cbded4 58%, #b8d0c3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.robot-stage:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(#ffffff55 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: .5;
+}
+
+.robot-shadow {
+  position: absolute;
+  bottom: 63px;
+  width: 275px;
+  height: 35px;
+  border-radius: 50%;
+  background: #76988840;
+  filter: blur(13px);
+}
+
+.robot {
+  position: relative;
+  width: 290px;
+  height: 355px;
+  z-index: 2;
+  animation: float 5s ease-in-out infinite;
+  filter: drop-shadow(0 20px 15px #6e938040);
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.robot-body {
+  position: absolute;
+  left: 38px;
+  top: 120px;
+  width: 214px;
+  height: 190px;
+  border-radius: 45px 45px 35px 35px;
+  background: linear-gradient(110deg, #ffffff 0%, #edf2ed 48%, #c7d5cd 100%);
+  border: 2px solid #c4d2c9;
+  box-shadow: inset -12px -14px 22px #b2c5ba50, inset 10px 7px 14px #ffffff, 0 12px 10px #7b9a8a25;
+}
+
+.body-panel {
+  position: absolute;
+  left: 65px;
+  top: 55px;
+  width: 84px;
+  height: 72px;
+  border-radius: 17px;
+  background: linear-gradient(145deg,#f6faf7,#d4e0d8);
+  border: 2px solid #c1d0c5;
+  box-shadow: inset 0 2px 4px #ffffff, 0 2px 5px #8ba89930;
+}
+
+.body-panel:after {
+  content: "";
+  position: absolute;
+  left: 29px;
+  top: 26px;
+  width: 26px;
+  height: 15px;
+  border-radius: 4px;
+  background: #8ca99a;
+  opacity: .3;
+}
+
+.neck {
+  position: absolute;
+  left: 126px;
+  top: 107px;
+  width: 42px;
+  height: 40px;
+  border-radius: 8px;
+  background: #b8c9be;
+  border: 2px solid #a6baad;
+}
+
+.head {
+  position: absolute;
+  left: 25px;
+  top: 5px;
+  width: 240px;
+  height: 158px;
+  border-radius: 46px 46px 36px 36px;
+  background: linear-gradient(120deg, #ffffff, #e9f0eb 65%, #c3d2c9);
+  border: 2px solid #c4d4c9;
+  box-shadow: inset 0 7px 13px #fff, inset -12px -15px 25px #b5c9bc40, 0 8px 10px #7b9a8a25;
+  z-index: 3;
+}
+
+.screen {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 196px;
+  height: 118px;
+  border-radius: 31px;
+  background: radial-gradient(circle at 50% 0%, #304945, #172a29);
+  border: 3px solid #c0d0c6;
+  box-shadow: inset 0 0 24px #091b1a, 0 0 0 3px #dbe5de;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 27px;
+  background: linear-gradient(120deg,#ffffff0d,transparent 50%);
+  pointer-events: none;
+}
+
+.face {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.eye {
+  position: absolute;
+  top: 35px;
+  width: 20px;
+  height: 27px;
+  border-radius: 50%;
+  background: #d7f5e5;
+  box-shadow: 0 0 12px #9ad7b8;
+  transition: .25s;
+}
+
+.eye.left { left: 51px; }
+.eye.right { right: 51px; }
+
+.mouth {
+  position: absolute;
+  left: 50%;
+  top: 75px;
+  width: 30px;
+  height: 13px;
+  transform: translateX(-50%);
+  border-bottom: 4px solid #d7f5e5;
+  border-radius: 50%;
+  transition: .25s;
+}
+
+.face.happy .eye {
+  height: 8px;
+  border-radius: 10px 10px 0 0;
+  transform: translateY(10px);
+}
+
+.face.happy .mouth {
+  width: 37px;
+  height: 20px;
+}
+
+.face.sad .eye { transform: translateY(5px); }
+.face.sad .mouth {
+  top: 88px;
+  border-bottom: 0;
+  border-top: 4px solid #d7f5e5;
+  border-radius: 50%;
+}
+
+.face.excited .eye {
+  width: 25px;
+  height: 30px;
+}
+
+.face.excited .mouth {
+  width: 25px;
+  height: 25px;
+  border: 4px solid #d7f5e5;
+  border-radius: 50%;
+}
+
+.antenna {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 29px;
+  border-radius: 5px;
+  background: #a3b9ab;
+}
+
+.antenna:after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: -5px;
+  width: 16px;
+  height: 16px;
+  background: #e5a98d;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #f6d5c4;
+}
+
+.wheel {
+  position: absolute;
+  top: 158px;
+  width: 83px;
+  height: 145px;
+  border-radius: 42px;
+  background: linear-gradient(90deg, #293b39, #526b62 47%, #263a37);
+  border: 4px solid #afc4b7;
+  box-shadow: inset -8px 0 12px #162a2550, 0 7px 5px #78988940;
+  z-index: 1;
+}
+
+.wheel.left { left: -15px; }
+.wheel.right { right: -15px; }
+
+.wheel:before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 39px;
+  width: 49px;
+  height: 64px;
+  border-radius: 50%;
+  background: #839d90;
+  border: 4px solid #c6d6cc;
+  box-shadow: inset 0 0 0 8px #3e554d, inset 0 0 0 12px #8da99a;
+}
+
+.wheel:after {
+  content: "";
+  position: absolute;
+  left: 32px;
+  top: 62px;
+  width: 12px;
+  height: 18px;
+  border-radius: 50%;
+  background: #20312d;
+}
+
+.arm {
+  position: absolute;
+  top: 126px;
+  width: 92px;
+  height: 120px;
+  z-index: 4;
+}
+
+.arm.left { left: -43px; transform: rotate(14deg); }
+.arm.right { right: -43px; transform: rotate(-14deg); }
+
+.segment {
+  position: absolute;
+  width: 28px;
+  height: 68px;
+  border-radius: 16px;
+  background: linear-gradient(100deg,#f8fcf9,#b8ccc0);
+  border: 2px solid #9fb9aa;
+  box-shadow: inset 4px 0 5px #fff8;
+}
+
+.arm.left .segment { transform: rotate(34deg); }
+.arm.right .segment { transform: rotate(-34deg); }
+
+.segment.one { top: 10px; left: 25px; }
+.segment.two { top: 56px; left: 55px; }
+
+.joint {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #cadbd0;
+  border: 4px solid #9bb5a6;
+  z-index: 2;
+}
+
+.arm.left .joint { top: 65px; left: 47px; }
+.arm.right .joint { top: 65px; left: 17px; }
+
+.claw {
+  position: absolute;
+  width: 45px;
+  height: 36px;
+  top: 103px;
+}
+
+.arm.left .claw { left: 72px; transform: rotate(-20deg); }
+.arm.right .claw { left: -25px; transform: rotate(20deg); }
+
+.claw:before, .claw:after {
+  content: "";
+  position: absolute;
+  width: 13px;
+  height: 28px;
+  border: 5px solid #dbe7df;
+  border-radius: 10px;
+  background: #a8c0b1;
+}
+
+.claw:before { left: 4px; transform: rotate(35deg); }
+.claw:after { left: 25px; transform: rotate(-35deg); }
+
+.robot-tag {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #ffffffaa;
+  backdrop-filter: blur(8px);
+  color: #476d5b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+.stage-bottom {
+  position: absolute;
+  bottom: 22px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #416254;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sound-waves {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+}
+
+.sound-waves span {
+  width: 3px;
+  border-radius: 5px;
+  background: #527c68;
+  animation: wave 1s ease-in-out infinite;
+}
+
+.sound-waves span:nth-child(1) { height: 7px; animation-delay: -.4s; }
+.sound-waves span:nth-child(2) { height: 14px; animation-delay: -.2s; }
+.sound-waves span:nth-child(3) { height: 20px; }
+.sound-waves span:nth-child(4) { height: 12px; animation-delay: -.3s; }
+.sound-waves span:nth-child(5) { height: 7px; animation-delay: -.1s; }
+
+@keyframes wave {
+  50% { transform: scaleY(.5); }
+}
+
+.section { padding: 105px 0; }
+
+.section-heading {
+  max-width: 650px;
+  margin-bottom: 48px;
+}
+
+.section-heading h2 {
+  font-size: clamp(32px, 4.5vw, 53px);
+  line-height: 1.08;
+  letter-spacing: -.055em;
+  margin: 16px 0;
+}
+
+.section-heading p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.intro {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.intro-quote {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(27px, 3.5vw, 43px);
+  line-height: 1.18;
+  letter-spacing: -.045em;
+}
+
+.intro-quote span { color: var(--green-dark); }
+
+.intro-copy {
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.trait-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 25px;
+}
+
+.trait {
+  padding: 10px 15px;
+  background: #eef5ef;
+  border: 1px solid #dce9df;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4e7060;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.feature-card {
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 23px;
+  background: #fff;
+  transition: .25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px #6e938a12;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: #edf4ee;
+  border-radius: 15px;
+  font-size: 23px;
+  margin-bottom: 25px;
+}
+
+.feature-card h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  letter-spacing: -.03em;
+}
+
+.feature-card p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.feature-card small {
+  display: block;
+  color: var(--green-dark);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  margin-top: 22px;
+}
+
+.specs {
+  background: #20332e;
+  color: #f1f5f1;
+}
+
+.specs .eyebrow { color: #a9cbb7; }
+.specs .section-heading p { color: #b0c1b9; }
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #52675e;
+  border: 1px solid #52675e;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.spec {
+  padding: 30px 24px;
+  background: #20332e;
+}
+
+.spec strong {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 35px;
+  letter-spacing: -.05em;
+  margin-bottom: 8px;
+}
+
+.spec span { color: #b0c1b9; font-size: 13px; }
+
+.day-section { background: #fff; }
+
+.day-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 70px;
+  align-items: start;
+}
+
+.timeline { position: relative; }
+
+.timeline:before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: #dce8df;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 22px;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: #e9f2eb;
+  border: 1px solid #d3e3d7;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  z-index: 1;
+}
+
+.timeline-item h3 {
+  font-size: 18px;
+  margin: 0 0 7px;
+}
+
+.timeline-item p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+}
+
+.timeline-item em {
+  display: block;
+  color: var(--green-dark);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .08em;
+  margin-bottom: 5px;
+}
+
+.demo-card {
+  background: #f0f5f0;
+  border: 1px solid #dce8df;
+  border-radius: 25px;
+  padding: 30px;
+  position: sticky;
+  top: 20px;
+}
+
+.demo-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.demo-top strong { font-family: 'Space Grotesk', sans-serif; }
+
+.demo-screen {
+  background: #20332e;
+  border-radius: 18px;
+  padding: 25px;
+  color: white;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.demo-screen .mini-face {
+  color: #c9f1da;
+  font-size: 28px;
+  letter-spacing: 10px;
+}
+
+.demo-screen p {
+  color: #c5d9cd;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.demo-controls {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.demo-controls button {
+  border: 1px solid #d1e0d5;
+  background: white;
+  border-radius: 999px;
+  padding: 10px 15px;
+  color: #476d5b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.demo-controls button:hover {
+  background: #dcecdf;
+}
+
+.comparison { background: var(--cream); }
+
+.table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow-x: auto;
+  background: white;
+}
+
+.compare {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 650px;
+}
+
+.compare th, .compare td {
+  padding: 23px 25px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.compare th {
+  background: #f1f5f0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+}
+
+.compare th:last-child { color: var(--green-dark); }
+
+.compare td {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.compare td:first-child {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.compare tr:last-child td { border-bottom: 0; }
+
+.compare td:last-child {
+  color: #466d59;
+  font-weight: 600;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.review {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 28px;
+}
+
+.stars { color: #d6a45f; letter-spacing: 4px; margin-bottom: 20px; }
+
+.review p {
+  line-height: 1.8;
+  color: #596962;
+  font-size: 14px;
+}
+
+.reviewer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e7f0e8;
+  font-size: 19px;
+}
+
+.reviewer strong { display: block; font-size: 13px; }
+.reviewer span { color: var(--muted); font-size: 12px; }
+
+.cta {
+  padding: 100px 0;
+  background: #e2eee5;
+}
+
+.cta-inner {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.cta h2 {
+  font-size: clamp(37px, 5vw, 62px);
+  letter-spacing: -.06em;
+  line-height: 1;
+  margin: 18px 0;
+}
+
+.cta p {
+  max-width: 500px;
+  margin: 0 auto 30px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+footer {
+  background: #172823;
+  color: #e9f0eb;
+  padding: 40px 0;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+footer .logo span { color: #a9cbb7; }
+
+footer p { color: #9db1a6; font-size: 12px; margin: 0; }
+
+.footer-links { display: flex; gap: 22px; font-size: 12px; color: #b5c8bc; }
+
+.footer-links a:hover { color: white; }
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #172823b8;
+  z-index: 100;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(7px);
+}
+
+.modal.open { display: flex; }
+
+.modal-box {
+  background: #fff;
+  width: min(440px,100%);
+  border-radius: 25px;
+  padding: 35px;
+  position: relative;
+  animation: appear .25s ease;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-box h2 { margin-bottom: 12px; }
+.modal-box p { color: var(--muted); line-height: 1.7; font-size: 14px; }
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 17px;
+  background: #f0f4f0;
+  border: 0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+}
+
+.form-field {
+  display: block;
+  width: 100%;
+  border: 1px solid #dbe4dc;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 10px 0;
+  background: #f8faf8;
+  color: var(--ink);
+}
+
+.form-field:focus { outline: 2px solid var(--green-dark); }
+
+.form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #53675b;
+}
+
+.modal .btn { width: 100%; margin-top: 12px; }
+
+.form-success {
+  display: none;
+  background: #e7f4e9;
+  color: #3c6d4e;
+  padding: 16px;
+  border-radius: 12px;
+  line-height: 1.6;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.form-success.show { display: block; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  transform: translate(-50%, 120px);
+  background: #20332e;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  z-index: 200;
+  transition: .3s;
+  max-width: calc(100% - 30px);
+  text-align: center;
+}
+
+.toast.show { transform: translate(-50%, 0); }
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 35px;
+  }
+
+  .hero-copy { text-align: center; }
+  .hero h1, .hero p { margin-left: auto; margin-right: auto; }
+  .hero-buttons, .hero-note { justify-content: center; }
+
+  .robot-stage { height: 460px; }
+
+  .intro-grid, .day-grid { grid-template-columns: 1fr; gap: 40px; }
+
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .spec-grid { grid-template-columns: repeat(2, 1fr); }
+  .review-grid { grid-template-columns: 1fr; }
+  .demo-card { position: static; }
+}
+
+@media (max-width: 600px) {
+  .container { width: min(100% - 30px, 1160px); }
+  .nav-links { display: none; }
+  .nav-links.mobile-open {
+    display: flex;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .menu-btn { display: block; background: transparent; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+  .hero h1 { font-size: 47px; }
+  .hero { min-height: auto; padding-bottom: 45px; }
+  .robot-stage { height: 420px; }
+  .robot { transform: scale(.82); }
+  .section { padding: 70px 0; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .spec-grid { grid-template-columns: repeat(2, 1fr); }
+  .spec strong { font-size: 30px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .cta { padding: 70px 0; }
+  .footer-links { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *:before, *:after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="container">
+  <nav aria-label="Main navigation">
+    <a class="logo" href="#top">tofu<span>˚</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#meet">Meet Tofu</a>
+      <a href="#features">Features</a>
+      <a href="#day">A day with Tofu</a>
+      <a href="#reviews">Reviews</a>
+    </div>
+    <button class="btn btn-dark" id="navPreorder">Pre-order ↗</button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="container hero">
+  <div class="hero-copy">
+    <div class="eyebrow">Your little everyday helper</div>
+    <h1>Meet <em>Tofu.</em><br>Your everyday<br>companion.</h1>
+    <p>
+      A tiny AI robot with a big personality.
+      Tofu helps with everyday errands, keeps your home connected,
+      and makes ordinary moments a little more fun.
+    </p>
+    <div class="hero-buttons">
+      <button class="btn btn-dark" id="heroVoice">🔊 Meet Tofu</button>
+      <a class="btn btn-light" href="#features">Explore features ↓</a>
+    </div>
+    <div class="hero-note">
+      <span class="status-dot"></span>
+      <span>Small robot. Big helpful energy.</span>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="robot-stage">
+      <div class="robot-tag">TOFU / PERSONAL AI</div>
+      <div class="robot-shadow"></div>
+
+      <div class="robot" aria-label="Illustration of Tofu, a small white robot with a screen face, wheels and extendable arms" role="img">
+        <div class="antenna"></div>
+
+        <div class="wheel left"></div>
+        <div class="wheel right"></div>
+
+        <div class="arm left">
+          <div class="segment one"></div>
+          <div class="segment two"></div>
+          <div class="joint"></div>
+          <div class="claw"></div>
+        </div>
+
+        <div class="arm right">
+          <div class="segment one"></div>
+          <div class="segment two"></div>
+          <div class="joint"></div>
+          <div class="claw"></div>
+        </div>
+
+        <div class="robot-body">
+          <div class="body-panel"></div>
+        </div>
+
+        <div class="neck"></div>
+
+        <div class="head">
+          <div class="screen">
+            <div class="face" id="heroFace">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-bottom">
+        <span>Curious by nature. Helpful by design.</span>
+        <div class="sound-waves" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section intro" id="meet">
+  <div class="container intro-grid">
+    <div>
+      <div class="eyebrow">More than a machine</div>
+      <p class="intro-quote">
+        “You tell Tofu what to do.
+        <span>Tofu tries its best to make it happen.</span>”
+      </p>
+    </div>
+    <div>
+      <p class="intro-copy">
+        Tofu is your little errand buddy. It can move around,
+        reach for small objects, interact with your voice,
+        and connect to compatible smart home devices.
+        But what makes Tofu special? It feels like a tiny friend
+        who is always ready to help.
+      </p>
+      <div class="trait-list">
+        <span class="trait">Curious</span>
+        <span class="trait">Playful</span>
+        <span class="trait">Helpful</span>
+        <span class="trait">Childlike</span>
+        <span class="trait">Intelligent</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="features">
+  <div class="section-heading">
+    <div class="eyebrow">Little robot. Many talents.</div>
+    <h2>Meet your new<br>everyday helper.</h2>
+    <p>
+      From small errands to smart home automation,
+      Tofu is designed to make everyday life a little easier.
+    </p>
+  </div>
+
+  <div class="feature-grid">
+    <article class="feature-card">
+      <div class="feature-icon">🦾</div>
+      <h3>Small hands, big help.</h3>
+      <p>
+        Tofu's extendable arms and little gripping hands
+        help it reach and carry small objects.
+      </p>
+      <small>PHYSICAL ASSISTANCE</small>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🎙️</div>
+      <h3>Just tell Tofu.</h3>
+      <p>
+        Talk naturally. Ask questions, get help with homework,
+        set reminders, plan your day, or simply chat.
+      </p>
+      <small>VOICE INTERACTION</small>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🏠</div>
+      <h3>Your home, connected.</h3>
+      <p>
+        Connect compatible smart devices and control lights,
+        fans, and other home automation with your voice.
+      </p>
+      <small>SMART HOME CONTROL</small>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>Always learning.</h3>
+      <p>
+        Object recognition, reminders, planning, and
+        environmental sensing help Tofu understand its surroundings.
+      </p>
+      <small>AI + SENSORS</small>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🎮</div>
+      <h3>Playtime included.</h3>
+      <p>
+        Tofu can play games, tell jokes, and react with
+        a sweet robotic voice and expressive screen face.
+      </p>
+      <small>COMPANIONSHIP</small>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🔋</div>
+      <h3>Made for everyday life.</h3>
+      <p>
+        A compact wheeled body, rechargeable battery,
+        connectivity, and approximately five hours of concept battery life.
+      </p>
+      <small>COMPACT DESIGN</small>
+    </article>
+  </div>
+</section>
+
+<section class="section specs">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">The Tofu blueprint</div>
+      <h2>Small enough for<br>your everyday life.</h2>
+      <p>
+        A concept specification sheet for Tofu.
+        Designed to be useful without taking over your home.
+      </p>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec">
+        <strong>~1 kg</strong>
+        <span>Concept carrying capacity</span>
+      </div>
+      <div class="spec">
+        <strong>5 hrs</strong>
+        <span>Target battery life</span>
+      </div>
+      <div class="spec">
+        <strong>2</strong>
+        <span>Extendable arms</span>
+      </div>
+      <div class="spec">
+        <strong>AI</strong>
+        <span>Voice + smart sensing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section day-section" id="day">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">A day with Tofu</div>
+      <h2>One little robot.<br>A whole day of help.</h2>
+      <p>
+        Tofu doesn't need to be the center of attention.
+        It just needs to be there when you need it.
+      </p>
+    </div>
+
+    <div class="day-grid">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">☀️</div>
+          <div>
+            <em>08:00 AM</em>
+            <h3>Good morning, sleepyhead.</h3>
+            <p>
+              Tofu wakes you up with a cheerful voice.
+              If you ignore it, it reminds you about your plans
+              and that you're running late.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">🍞</div>
+          <div>
+            <em>08:30 AM</em>
+            <h3>Breakfast, please.</h3>
+            <p>
+              "Tofu, go bring the plate and jam spread knife."
+              Tofu moves to help with small, reachable errands.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">📚</div>
+          <div>
+            <em>Afternoon</em>
+            <h3>Study buddy mode.</h3>
+            <p>
+              Ask Tofu about homework, set a reminder,
+              or take a break with a little game.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">🏡</div>
+          <div>
+            <em>Evening</em>
+            <h3>Welcome home.</h3>
+            <p>
+              Tofu helps with compatible smart home controls,
+              reminders, and little tasks around the house.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-top">
+          <strong>Try Tofu's personality</strong>
+          <span class="status-dot"></span>
+        </div>
+        <div class="demo-screen">
+          <div class="mini-face" id="demoFace">•ᴗ•</div>
+          <p id="demoText">"Hello! I'm Tofu. What can I help you with today?"</p>
+        </div>
+        <div class="demo-controls">
+          <button data-message="Good morning! Wake up, wake up! ☀️" data-face="happy">☀️ Wake me up</button>
+          <button data-message="Yay! Let's play a little game! 🎮" data-face="excited">🎮 Play</button>
+          <button data-message="Hmm... I wonder what we should do next?" data-face="normal">💭 Curious</button>
+          <button data-message="Okay! I'll do my best to help! 🤖" data-face="happy">🦾 Ask Tofu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section comparison">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">Life with Tofu</div>
+      <h2>Everyday problems.<br>A little more help.</h2>
+      <p>
+        The small moments where Tofu could make a difference.
+      </p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Everyday moment</th>
+            <th>Without Tofu</th>
+            <th>With Tofu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Morning alarm</td>
+            <td>The same phone alarm every morning.</td>
+            <td>Tofu wakes you up like a little friend.</td>
+          </tr>
+          <tr>
+            <td>Missed calls</td>
+            <td>Your phone is in another room.</td>
+            <td>With authorized phone integration, Tofu can notify you or help handle calls.</td>
+          </tr>
+          <tr>
+            <td>Fan or lights</td>
+            <td>You get up to switch them on.</td>
+            <td>Ask Tofu to control compatible smart devices.</td>
+          </tr>
+          <tr>
+            <td>Forgot something</td>
+            <td>Walk back to get it yourself.</td>
+            <td>Ask Tofu to bring a small reachable object.</td>
+          </tr>
+          <tr>
+            <td>Daily planning</td>
+            <td>Try to remember everything yourself.</td>
+            <td>Tofu reminds you about plans and tasks.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="reviews">
+  <div class="section-heading">
+    <div class="eyebrow">The Tofu family</div>
+    <h2>Small helper.<br>Big smiles.</h2>
+    <p>
+      Concept testimonials from the people Tofu hopes to help.
+    </p>
+  </div>
+
+  <div class="review-grid">
+    <article class="review">
+      <div class="stars">★★★★★</div>
+      <p>
+        "I love that Tofu is not just sitting there answering questions.
+        It actually tries to help me with little things around the house!"
+      </p>
+      <div class="reviewer">
+        <div class="avatar">👩🏻</div>
+        <div>
+          <strong>Future Tofu user</strong>
+          <span>Concept testimonial</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="review">
+      <div class="stars">★★★★★</div>
+      <p>
+        "The cute voice and screen face make it feel like a little
+        friend. I would absolutely want to play games with Tofu."
+      </p>
+      <div class="reviewer">
+        <div class="avatar">🧒🏻</div>
+        <div>
+          <strong>Future Tofu user</strong>
+          <span>Concept testimonial</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="review">
+      <div class="stars">★★★★★</div>
+      <p>
+        "A compact robot that helps with reminders, smart home controls,
+        and small errands? That sounds genuinely useful."
+      </p>
+      <div class="reviewer">
+        <div class="avatar">👴🏻</div>
+        <div>
+          <strong>Future Tofu user</strong>
+          <span>Concept testimonial</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-inner">
+    <div class="eyebrow">Your little companion is waiting</div>
+    <h2>Bring a little Tofu<br>into your everyday.</h2>
+    <p>
+      Join the early access list and be among the first
+      to explore the future of everyday companionship.
+    </p>
+    <div class="cta-buttons">
+      <button class="btn btn-dark" id="ctaPreorder">Join the waitlist ↗</button>
+      <button class="btn btn-light" id="ctaVoice">Hear Tofu speak 🔊</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a class="logo" href="#top">tofu<span>˚</span></a>
+    <p>Made for everyday life. Built with a little personality.</p>
+    <div class="footer-links">
+      <a href="#meet">About</a>
+      <a href="#features">Features</a>
+      <a href="#day">Explore</a>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="close-modal" id="closeModal" aria-label="Close">×</button>
+    <div class="eyebrow">Tofu early access</div>
+    <h2 id="modalTitle">Welcome to the Tofu family. 🥢</h2>
+    <p>
+      This is a concept pre-order form for the ACM product demo.
+      Enter your details to explore the experience.
+    </p>
+    <form id="waitlistForm">
+      <label class="form-label" for="userName">Your name</label>
+      <input class="form-field" id="userName" type="text" placeholder="Enter your name" required>
+      <label class="form-label" for="userEmail">Email address</label>
+      <input class="form-field" id="userEmail" type="email" placeholder="you@example.com" required>
+      <button class="btn btn-dark" type="submit">Join the waitlist ↗</button>
+    </form>
+    <div class="form-success" id="formSuccess" role="status"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $ = (selector) => document.querySelector(selector);
+
+const heroFace = $('#heroFace');
+const demoFace = $('#demoFace');
+const demoText = $('#demoText');
+const toast = $('#toast');
+const modal = $('#modal');
+const waitlistForm = $('#waitlistForm');
+const formSuccess = $('#formSuccess');
+
+function setFace(mood) {
+  heroFace.className = 'face ' + (mood || 'normal');
+}
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    showToast('Voice playback is not supported in this browser.');
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-IN';
+  utterance.rate = .92;
+  utterance.pitch = 1.35;
+  utterance.volume = 1;
+
+  utterance.onstart = () => {
+    setFace('happy');
+  };
+
+  utterance.onend = () => {
+    setFace('normal');
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+function meetTofu() {
+  const message = "Hello! I am Tofu. I am ready to help you! Let's make today a little easier.";
+  speak(message);
+  showToast('Tofu is talking! 🔊');
+}
+
+$('#heroVoice').addEventListener('click', meetTofu);
+$('#ctaVoice').addEventListener('click', meetTofu);
+
+document.querySelectorAll('.demo-controls button').forEach(button => {
+  button.addEventListener('click', () => {
+    const message = button.dataset.message;
+    const mood = button.dataset.face || 'normal';
+
+    demoText.textContent = '"' + message + '"';
+    demoFace.textContent =
+      mood === 'excited' ? '✦ᴗ✦' :
+      mood === 'happy' ? '•ᴗ•' : '•‿•';
+
+    setFace(mood);
+    speak(message);
+  });
+});
+
+function openModal() {
+  modal.classList.add('open');
+  $('#userName').focus();
+}
+
+function closeModal() {
+  modal.classList.remove('open');
+  formSuccess.classList.remove('show');
+  waitlistForm.style.display = '';
+}
+
+$('#navPreorder').addEventListener('click', openModal);
+$('#ctaPreorder').addEventListener('click', openModal);
+$('#closeModal').addEventListener('click', closeModal);
+
+modal.addEventListener('click', (event) => {
+  if (event.target === modal) closeModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeModal();
+});
+
+waitlistForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const name = $('#userName').value.trim();
+  if (!name) return;
+
+  waitlistForm.style.display = 'none';
+  formSuccess.textContent =
+    'You are on the concept waitlist, ' + name + '! Tofu is excited to meet you. 🤖';
+  formSuccess.classList.add('show');
+});
+
+const menuBtn = $('#menuBtn');
+const navLinks = $('#navLinks');
+
+menuBtn.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('mobile-open');
+  menuBtn.setAttribute('aria-expanded', String(open));
+  menuBtn.textContent = open ? '×' : '☰';
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('mobile-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.textContent = '☰';
+  });
+});
+</script>
+</body>
+</html>
